@@ -3,6 +3,7 @@
 ## Setup GitHub Application for ARC
 
 1. Go to [Developer Settings > GitHub Apps](https://github.com/settings/apps)
+![image](./images/SkzpPT9AA.png)
 
 ### Create a GitHub APP
 2. Create a GitHub App that is owned by an organization. For more information, see "[Registering a GitHub App](https://docs.github.com/en/apps/creating-github-apps/creating-github-apps/creating-a-github-app)". Configure the GitHub App as follows.
@@ -14,33 +15,35 @@
         -   **Administration**: Read and write
             
             **Note**: `Administration: Read and write` is only required when configuring Actions Runner Controller to register at the repository scope. It is not required to register at the organization scope.
-            
+            ![image](./images/Sy6V_pcAC.png)
 
 
             
         -   **Metadata**: Read-only
-            
+            ![image](./images/SJIIOp50C.png)
 
             
     3.  Under "Permissions," click **Organization permissions**. Then use the dropdown menus to select the following access permissions.
         
         -   **Self-hosted runners**: Read and write
-            
+            ![image](./images/ry83uTqRA.png)
 
 
 3.  After creating the GitHub App, on the GitHub App's page, note the value for "App ID". You will use this value later.
-
+![image](./images/ry_AOaq00.png)
 
     ```APP ID=1014082```
 
     
 4.  Scroll down you'll see under "Private keys", click **Generate a private key**, and save the `.pem` file. You will use this key later.
-
+![image](./images/SJZDFTc0A.png)
+![image](./images/rkAJq6900.png)
 
 And, browser will download a **"xxx.pem"**.
 
 5.  In the menu at the top-left corner of the page, click **Install app**, and next to your organization, click **Install** to install the app on your organization.
-
+![image](./images/SJtbqpqC0.png)
+![image](./images/HyRz5690R.png)
 
 
 
@@ -211,9 +214,16 @@ service_account = "tf-gke-gh-runner-dind-y9nl@devfest-2024-demo-437413.iam.gserv
 
 ## Test with DEMO Repository 
 
-### Clone DEMO Repository
-```bash
-$ git clone https://github.com/jianan1104/devfest-2024-gh-arc-gke-demo.git
-```
+### Go to Your DEMO Repository
+
+Go to https://github.com/jianan1104/devfest-2024-gh-arc-gke-demo.git
+
+
+### Click `Actions` Tab and Run Workflow
+
+![image](./images/Sk1g8yo0C.png)
+
+![image](./images/S1IZI1jC0.png)
+
 
 
