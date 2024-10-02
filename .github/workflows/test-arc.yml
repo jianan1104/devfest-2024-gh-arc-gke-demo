@@ -1,0 +1,42 @@
+name: Test ARC Runner
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test-runner:
+    runs-on: gh-runner-dind
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Test environment
+      run: |
+        echo "Running on a self-hosted runner"
+        echo "Runner name: ${{ runner.name }}"
+        echo "Runner OS: ${{ runner.os }}"
+
+    - name: Check for kubectl
+      run: kubectl version --client
+
+    - name: Check for gcloud
+      run: gcloud version
+
+    - name: List files in workspace
+      run: ls -la
+
+    - name: Test network connectivity
+      run: |
+        curl -I https://github.com
+        curl -I https://google.com
+
+    - name: Test pod creation
+      run: |
+        kubectl create namespace test-arc
+        kubectl run nginx --image=nginx --namespace test-arc
+        kubectl get pods -n test-arc
+        kubectl delete namespace test-arc
