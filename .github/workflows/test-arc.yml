@@ -27,12 +27,6 @@ jobs:
         docker run --rm ubuntu:latest bash -c "echo hello Google DevFest 2024"
         docker run --rm python:3.9-slim python -c "print('Python says: Hello from Docker!')"
 
-    - name: Test Kubernetes commands
-      run: |
-        kubectl version --client
-        kubectl get nodes
-        kubectl get pods -A
-
     - name: Run a multi-line script
       run: |
         echo "Starting multi-line script test"
@@ -61,13 +55,6 @@ jobs:
         echo "Runner OS: ${{ runner.os }}"
         uname -a
         cat /etc/os-release
-
-    - name: Install and test Python
-      run: |
-        apt-get update && apt-get install -y python3 python3-pip
-        python3 --version
-        pip3 install requests
-        python3 -c "import requests; print(requests.get('https://api.github.com').json()['current_user_url'])"
 
   matrix-job:
     runs-on: arc-runners
