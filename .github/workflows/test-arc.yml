@@ -20,23 +20,8 @@ jobs:
         echo "Runner name: ${{ runner.name }}"
         echo "Runner OS: ${{ runner.os }}"
 
-    - name: Check for kubectl
-      run: kubectl version --client
-
-    - name: Check for gcloud
-      run: gcloud version
-
-    - name: List files in workspace
-      run: ls -la
-
-    - name: Test network connectivity
+    - name: Test docker in docker 
       run: |
-        curl -I https://github.com
-        curl -I https://google.com
-
-    - name: Test pod creation
-      run: |
-        kubectl create namespace test-arc
-        kubectl run nginx --image=nginx --namespace test-arc
-        kubectl get pods -n test-arc
-        kubectl delete namespace test-arc
+        docker version
+        docker info
+        docker run --rm ubuntu:latest bash -c "echo hello Google DevFest 2024"
