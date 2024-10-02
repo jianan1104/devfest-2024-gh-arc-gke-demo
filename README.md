@@ -3,7 +3,6 @@
 ## Setup GitHub Application for ARC
 
 1. Go to [Developer Settings > GitHub Apps](https://github.com/settings/apps)
-![image](https://hackmd.io/_uploads/SkzpPT9AA.png)
 
 ### Create a GitHub APP
 2. Create a GitHub App that is owned by an organization. For more information, see "[Registering a GitHub App](https://docs.github.com/en/apps/creating-github-apps/creating-github-apps/creating-a-github-app)". Configure the GitHub App as follows.
@@ -15,35 +14,33 @@
         -   **Administration**: Read and write
             
             **Note**: `Administration: Read and write` is only required when configuring Actions Runner Controller to register at the repository scope. It is not required to register at the organization scope.
-            ![image](https://hackmd.io/_uploads/Sy6V_pcAC.png)
+            
 
 
             
         -   **Metadata**: Read-only
-            ![image](https://hackmd.io/_uploads/SJIIOp50C.png)
+            
 
             
     3.  Under "Permissions," click **Organization permissions**. Then use the dropdown menus to select the following access permissions.
         
         -   **Self-hosted runners**: Read and write
-            ![image](https://hackmd.io/_uploads/ry83uTqRA.png)
+            
 
 
 3.  After creating the GitHub App, on the GitHub App's page, note the value for "App ID". You will use this value later.
-![image](https://hackmd.io/_uploads/ry_AOaq00.png)
+
 
     ```APP ID=1014082```
 
     
 4.  Scroll down you'll see under "Private keys", click **Generate a private key**, and save the `.pem` file. You will use this key later.
-![image](https://hackmd.io/_uploads/SJZDFTc0A.png)
-![image](https://hackmd.io/_uploads/rkAJq6900.png)
+
 
 And, browser will download a **"xxx.pem"**.
 
 5.  In the menu at the top-left corner of the page, click **Install app**, and next to your organization, click **Install** to install the app on your organization.
-![image](https://hackmd.io/_uploads/SJtbqpqC0.png)
-![image](https://hackmd.io/_uploads/HyRz5690R.png)
+
 
 
 
@@ -103,9 +100,9 @@ $ gcloud services enable \
 
 If you got the error like this, please go to https://console.cloud.google.com/billing/linkedaccount , link a billing account for this working project.
 
-:::danger
+
 ERROR: (gcloud.services.enable) FAILED_PRECONDITION: Billing account for project '643933963932' is not found. Billing must be enabled for activation of service(s) 'container.googleapis.com,container.googleapis.com,artifactregistry.googleapis.com,compute.googleapis.com,compute.googleapis.com,compute.googleapis.com,containerregistry.googleapis.com,dns.googleapis.com,dns.googleapis.com' to proceed.
-:::
+
 
 ### Setup GCP Crendentilas
 
@@ -139,14 +136,14 @@ cd ./terraform-google-github-actions-runners/examples/gh-runner-gke-dind
 
 Set value for `gh_app_id`, `gh_app_installation_id`, `gh_app_private_key` and `gh_config_url`.
 
-:::info
+
 - Use any text editor to open `*.pem` file to get raw text of private key.
 - `gh_config_url` could be a repository URL or organization URL, depends on what account you installed APP.
-:::
-:::info
+
+
 Remove `enable_private_nodes`  for not support value for current GCP provider.
 Add `zones` or `region` if you want your cluster at specific location.
-:::
+
 
 
 ```tf=
@@ -219,4 +216,4 @@ service_account = "tf-gke-gh-runner-dind-y9nl@devfest-2024-demo-437413.iam.gserv
 $ git clone https://github.com/jianan1104/devfest-2024-gh-arc-gke-demo.git
 ```
 
-![image](https://hackmd.io/_uploads/SJL84kjR0.png)
+
