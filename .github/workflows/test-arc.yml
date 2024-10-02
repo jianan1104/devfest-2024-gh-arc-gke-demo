@@ -23,14 +23,17 @@ jobs:
     - name: Test docker in docker 
       run: |
         docker run --rm ubuntu:latest bash -c "echo hello Google DevFest 2024"
-  container-job:
-    runs-on: arc-runners
-    image: ubuntu:latest
+  container-test-job:
+    runs-on: ubuntu-latest
+    container:
+      image: node:18
+      env:
+        NODE_ENV: development
+      ports:
+        - 80
+      volumes:
+        - my_docker_volume:/volume_mount
+      options: --cpus 1
     steps:
-    - name: Test environment
-      run: |
-        echo "Running on a self-hosted runner"
-        echo "Runner name: ${{ runner.name }}"
-        echo "Runner OS: ${{ runner.os }}"
-
-        uanme
+      - name: Check for dockerenv file
+        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
