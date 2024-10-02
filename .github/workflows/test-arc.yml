@@ -9,7 +9,7 @@ on:
 
 jobs:
   test-runner:
-    runs-on: gh-runner-dind
+    runs-on: arc-gha-rs-controller
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
