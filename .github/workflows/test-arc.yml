@@ -1,4 +1,4 @@
-name: Test ARC Runner
+name: Enhanced ARC Runner Test
 
 on:
   push:
@@ -12,28 +12,90 @@ jobs:
     runs-on: arc-runners
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Test environment
       run: |
         echo "Running on a self-hosted runner"
         echo "Runner name: ${{ runner.name }}"
         echo "Runner OS: ${{ runner.os }}"
+        echo "GitHub workspace: ${{ github.workspace }}"
+        echo "GitHub ref: ${{ github.ref }}"
 
     - name: Test docker in docker 
       run: |
         docker run --rm ubuntu:latest bash -c "echo hello Google DevFest 2024"
-  container-test-job:
-    runs-on: ubuntu-latest
-    container:
-      image: node:18
-      env:
-        NODE_ENV: development
-      ports:
-        - 80
-      volumes:
-        - my_docker_volume:/volume_mount
-      options: --cpus 1
+        docker run --rm python:3.9-slim python -c "print('Python says: Hello from Docker!')"
+
+    - name: Test Kubernetes commands
+      run: |
+        kubectl version --client
+        kubectl get nodes
+        kubectl get pods -A
+
+    - name: Run a multi-line script
+      run: |
+        echo "Starting multi-line script test"
+        for i in {1..5}
+        do
+          echo "Iteration $i"
+          date
+          sleep 1
+        done
+        echo "Multi-line script test completed"
+
+    - name: Test GitHub Actions Context
+      run: |
+        echo "Event name: ${{ github.event_name }}"
+        echo "Repository: ${{ github.repository }}"
+        echo "Commit SHA: ${{ github.sha }}"
+
+  container-job:
+    runs-on: arc-runners
+    container: ubuntu:latest
     steps:
-      - name: Check for dockerenv file
-        run: (ls /.dockerenv && echo Found dockerenv) || (echo No dockerenv)
+    - name: Test container environment
+      run: |
+        echo "Running in a container on a self-hosted runner"
+        echo "Runner name: ${{ runner.name }}"
+        echo "Runner OS: ${{ runner.os }}"
+        uname -a
+        cat /etc/os-release
+
+    - name: Install and test Python
+      run: |
+        apt-get update && apt-get install -y python3 python3-pip
+        python3 --version
+        pip3 install requests
+        python3 -c "import requests; print(requests.get('https://api.github.com').json()['current_user_url'])"
+
+  matrix-job:
+    runs-on: arc-runners
+    strategy:
+      matrix:
+        python-version: [3.8, 3.9, '3.10']
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Display Python version
+      run: python -c "import sys; print(sys.version)"
+
+  gcloud-job:
+    runs-on: arc-runners
+    steps:
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+    - name: Set up Cloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+
+    - name: Use gcloud CLI
+      run: |
+        gcloud info
+        gcloud projects list
+        gcloud compute instances list --project=${{ secrets.GCP_PROJECT_ID }}
