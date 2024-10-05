@@ -2,6 +2,8 @@ name: Enhanced ARC Runner Test
 
 on:
   workflow_dispatch:
+  pull_request:
+    types: [opened]
 
 jobs:
   test-runner:
