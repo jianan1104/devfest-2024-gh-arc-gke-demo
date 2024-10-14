@@ -14,3 +14,4 @@ jobs:
       - name: Deploy step
         run: |
           echo "Deploying..."
+          sleep 20

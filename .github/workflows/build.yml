@@ -13,3 +13,4 @@ jobs:
       - name: Build step
         run: |
           echo "Building..."
+          sleep 30
