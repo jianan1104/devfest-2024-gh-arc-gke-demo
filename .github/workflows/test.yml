@@ -7,7 +7,7 @@ on:
     types: completed
 
 jobs:
-  deploy:
+  test:
     runs-on: arc-runners
     steps:
       - name: Test step
