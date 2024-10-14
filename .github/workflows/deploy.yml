@@ -1,0 +1,15 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: [Build]
+    types: completed
+
+jobs:
+  deploy:
+    runs-on: arc-runners
+    steps:
+      - name: Deploy step
+        run: |
+          echo "Deploying..."

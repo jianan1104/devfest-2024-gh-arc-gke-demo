@@ -1,0 +1,14 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    runs-on: arc-runners
+    steps:
+      - name: Build step
+        run: |
+          echo "Building..."
