@@ -4,7 +4,7 @@ on:
   push:
   workflow_dispatch:
   workflow_run:
-    workflows: [Build]
+    workflows: ["Build"]
     types: completed
 
 jobs:
